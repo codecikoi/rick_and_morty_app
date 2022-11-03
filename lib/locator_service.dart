@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:rick_and_morty_app/core/platform/network_info.dart';
+import 'package:rick_and_morty_app/feature/data/data_sources/person_local_data_source.dart';
 import 'package:rick_and_morty_app/feature/data/data_sources/person_remote_data_source.dart';
 import 'package:rick_and_morty_app/feature/data/repositories/person_repository_impl.dart';
 import 'package:rick_and_morty_app/feature/domain/repositories/person_repository.dart';
@@ -40,6 +41,12 @@ Future<void> init() async {
   sl.registerLazySingleton<PersonRemoteDataSource>(
     () => PersonRemoteDataSourceImpl(
       client: sl(),
+    ),
+  );
+
+  sl.registerLazySingleton<PersonLocalDataSource>(
+    () => PersonLocalDataSourceImpl(
+      sharedPreferences: sl(),
     ),
   );
 
